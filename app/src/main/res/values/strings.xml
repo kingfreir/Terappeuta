@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Terappeuta</string>
+    <string name="button_name">Test Popup Alarm</string>
+    <string name="default_hour">--:--</string>
+    <string name="home_message">just breathe</string>
+    <!--Notification Messages-->
+
+</resources>
