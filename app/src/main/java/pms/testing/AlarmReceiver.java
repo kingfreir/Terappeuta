@@ -18,34 +18,38 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.bumptech.glide.request.target.NotificationTarget;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AlarmReceiver extends BroadcastReceiver {
-    public AlarmReceiver() {
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //Create popup
-        //Toast.makeText(context,"Sending Popup Intent",Toast.LENGTH_SHORT).show();
+        String intro, message;
 
-        //too large!!!
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.logo_terappeuta);
-        /*
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,75,out);
-        Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-        */
+        intro = context.getResources().getString(R.string.intro_message);
+        message = getMessages(context);
+
+        System.out.println(intro+" "+message);
+
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),R.mipmap.logo_terappeuta);
+        Bitmap image = BitmapFactory.decodeResource(context.getResources(),R.raw.space_rock);
+        Bitmap resize = Bitmap.createScaledBitmap(image,120,120,false);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_stat_name)
-                        .setLargeIcon(bitmap)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!")
+                        .setSmallIcon(R.drawable.ic_announcement_black_24dp)
+                        .setContentTitle("Terappeuta")
+                        .setContentText(message)
                         .setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(bitmap))
+                            .bigPicture(resize)
+                                .bigLargeIcon(icon)
+                            .setSummaryText(message)
+                            .setBigContentTitle(intro))
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
         Intent result = new Intent(context,PopupActivity.class);
@@ -54,10 +58,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         stackBuilder.addParentStack(PopupActivity.class);
         stackBuilder.addNextIntent(result);
 
-        PendingIntent pintent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(pintent);
+        PendingIntent pIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pIntent);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(1,mBuilder.build());
+    }
+
+    private String getMessages(Context context){
+        String[] array = context.getResources().getStringArray(R.array.messages);
+        ArrayList<String> messages = new ArrayList<>();
+        messages = (ArrayList) Arrays.asList(array);
+        return messages.get(1);
     }
 }

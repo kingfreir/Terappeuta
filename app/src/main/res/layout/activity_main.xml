@@ -3,21 +3,61 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/default_hour"
-        android:textStyle="bold"
-        android:textSize="100dp"
+        android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/hour_text"
-        android:onClick="startAlarm"/>
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="@string/default_hour"
+            android:textStyle="bold"
+            android:textSize="70sp"
+            android:id="@+id/hour_one"
+            android:onClick="showTimePicker" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:id="@+id/switch_one" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="@string/default_hour"
+            android:textStyle="bold"
+            android:textSize="70sp"
+            android:id="@+id/hour_two"
+            android:onClick="showTimePicker"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:id="@+id/switch_two" />
+    </LinearLayout>
+
     <Button
-        android:text="Cancel Alarm"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="cancelAlarm"/>
+        android:onClick="testNotification"
+        android:text="@string/button_name"
+        android:layout_gravity="center_horizontal"/>
 
     <ImageView
         android:layout_marginTop="50dp"
@@ -32,6 +72,6 @@
         android:layout_marginTop="24dp"
         android:layout_gravity="center_horizontal"
         android:textStyle="bold"
-        android:textSize="30dp"
-        android:drawableTint="@color/colorPrimary"/>
+        android:textSize="30sp"
+        android:textColor="@color/greenAccent"/>
 </LinearLayout>

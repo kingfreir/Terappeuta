@@ -27,7 +27,6 @@ public class PopupActivity extends AppCompatActivity {
         NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(1);
 
-        //AlertDialog dialog = new AlertDialog();
         Toast.makeText(this,"Hello again!",Toast.LENGTH_LONG).show();
 
         SharedPreferences prefs = getSharedPreferences("prefs",0);

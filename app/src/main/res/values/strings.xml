@@ -3,6 +3,48 @@
     <string name="button_name">Test Popup Alarm</string>
     <string name="default_hour">--:--</string>
     <string name="home_message">just breathe</string>
-    <!--Notification Messages-->
 
+    <string name="intro_message">Instead Of Spending Money&#8230;</string>
+
+    <!--Notification Messages-->
+    <string-array name="messages">
+        <item>Find the most beautiful place within 100 miles and go there.</item>
+        <item>Find a bench and take in the view.</item>
+        <item>Read a book. Start with a classic like Catch 22 or Great Gatsby.</item>
+        <item>Visit a local museum. Art museums often have amazing grounds to explore.</item>
+        <item>Go to a park. Play on the playground or dip your toes in the stream.</item>
+        <item>Clean your house. There’s never a bad time to check it off the list.</item>
+        <item>Write. Anything. It doesn’t have to be the next American novel,
+            and no one else has to read it. But putting your thoughts on paper can change your life.</item>
+        <item>Visit the library. They still exist. And they are better than you remember.</item>
+        <item>Ride your bike. Just make sure to wear a helmet.</item>
+        <item>Take a walk. Get to know your area.</item>
+        <item>Volunteer. There are hundreds of opportunities daily to make a difference. Today’s the day.</item>
+        <item>Exercise. You’ll feel better and get healthy. Skip the gym and find somewhere outdoors.</item>
+        <item>Spend time with a friend. In person. The only reason for a phone is to take a selfie to remember the good times.</item>
+        <item>Call your grandparents. They miss you.</item>
+        <item>Update your resume, even when you’re not looking for a new job. You never know when an opportunity will present itself.</item>
+        <item>Spend time in the garden. Your plants will thank you.</item>
+        <item>Play tennis. Or basketball. Or soccer. Any sport really.</item>
+        <item>Take a nap. A hammock, backyard, or beach are the ideal spots.</item>
+        <item>Learn a new language. Practice with native speakers.</item>
+        <item>Learn how to code. No matter what your profession, learning new computer skills can help you stand out.</item>
+        <item>Clean out your email box. It’s time to get organized.</item>
+        <item>Learn to play guitar. Or go fishing. Find your next hobby.</item>
+        <item>Make time for romance. Channel your inner high school-self and
+            have some fun with your spouse.</item>
+        <item>Build something. If you’re handy, use old wood to create a table. If you’re not,
+            find a project on Pinterest that anyone can do.</item>
+        <item>Experiment in the kitchen. Use all those ingredients that got shoved to the back of the pantry and experiment.
+            You may discover your inner Bobby Flay.</item>
+        <item>Groom and bathe your pets. Fido and Socks will thank you. Your family will too.</item>
+        <item>Find a heavily traffic spot and people watch. Reality TV has nothing on an hour of people watching.</item>
+        <item>Have a bonfire. Invite your friends or enjoy the time with your family.</item>
+        <item>Sit on your porch or deck. Your favorite spirits optional.</item>
+        <item>Host a game night. Play cards and board games. Make it a pot luck to save money.</item>
+        <item>Go to a high school sporting event. You may have to pay for football and basketball,
+            but many sports don’t cost a dime.</item>
+        <item>Get a second job. The only thing better than saving money is making money.
+            Find a part time job you enjoy with people you enjoy.</item>
+    </string-array>
 </resources>
