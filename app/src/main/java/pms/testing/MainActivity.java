@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.util.GregorianCalendar;
@@ -14,6 +15,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.text.format.Formatter;
 import android.view.Gravity;
@@ -61,12 +63,16 @@ public class MainActivity extends AppCompatActivity {
                 preferences.edit().putBoolean("switch_one_state",b).commit();
 
                 int id = preferences.getInt("alarm_id_one",0);
+                System.out.println("one "+id);
+
                 if(b){
                     //alarm on
                     int hourOfDay = preferences.getInt("hour_one",0);
                     int minute = preferences.getInt("minute_one",0);
 
                     if(id!=0) {
+                        intent.putExtra("id",id);
+                        intent.putExtra("isMorningAlarm",true);
                         PendingIntent p_intent = PendingIntent.getBroadcast(getApplicationContext(), id, intent, 0);
 
                         Calendar calendar = Calendar.getInstance();
@@ -75,8 +81,12 @@ public class MainActivity extends AppCompatActivity {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
-                        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                                AlarmManager.INTERVAL_DAY, p_intent);
+                        if(calendar.getTimeInMillis()<System.currentTimeMillis()){
+                            calendar.add(Calendar.DATE,1);
+                        }
+
+                        System.out.println("Alarm set for: "+calendar.getTime());
+                        manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), p_intent);
 
                         Toast.makeText(MainActivity.this,"Morning alarm was set!",Toast.LENGTH_SHORT).show();
                     }else{
@@ -102,13 +112,16 @@ public class MainActivity extends AppCompatActivity {
                 preferences.edit().putBoolean("switch_two_state",b).commit();
 
                 int id = preferences.getInt("alarm_id_two",0);
-                System.out.println("Alarm two id: "+id);
+                System.out.println("two "+id);
+
                 if(b){
                     //alarm on
                     int hourOfDay = preferences.getInt("hour_two",0);
                     int minute = preferences.getInt("minute_two",0);
 
                     if(id!=0) {
+                        intent.putExtra("id",id);
+                        intent.putExtra("isMorningAlarm",false);
                         PendingIntent p_intent = PendingIntent.getBroadcast(getApplicationContext(), id, intent, 0);
 
                         Calendar calendar = Calendar.getInstance();
@@ -117,13 +130,16 @@ public class MainActivity extends AppCompatActivity {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
-                        //Repeat alarm every day
-                        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                                AlarmManager.INTERVAL_DAY, p_intent);
+                        if(calendar.getTimeInMillis()<System.currentTimeMillis()){
+                            calendar.add(Calendar.DATE,1);
+                        }
+
+                        System.out.println("Alarm set for: "+calendar.getTime());
+                        manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), p_intent);
 
                         Toast.makeText(MainActivity.this,"Evening alarm was set!",Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(MainActivity.this, "No evening alam was set!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "No evening alarm was set!", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     //alarm off
@@ -145,6 +161,10 @@ public class MainActivity extends AppCompatActivity {
                 .into(imageViewTarget);
     }
 
+    public void showNotifications(View view){
+        Intent intent = new Intent(this,PopupActivity.class);
+        startActivity(intent);
+    }
     public void showTimePicker(View view){
         DialogFragment dialog = new TimePickerFragment();
         Boolean isHourOne = view.getId()==R.id.hour_one;
@@ -174,18 +194,6 @@ public class MainActivity extends AppCompatActivity {
         text=(h!=-1)?String.format(Locale.getDefault(),"%02d:%02d",h,m):"--:--";
         text_two.setText(text);
 
-    }
-
-    public void testNotification(View view){
-        Intent intent = new Intent(this,AlarmReceiver.class);
-
-        PendingIntent pIntent = PendingIntent.getBroadcast(this,1,intent,0);
-
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,1000,pIntent);
-
-        Toast.makeText(this,"test alarm set",Toast.LENGTH_SHORT).show();
     }
 
     public static class TimePickerFragment extends DialogFragment
@@ -222,17 +230,23 @@ public class MainActivity extends AppCompatActivity {
 
                 id = (int) System.currentTimeMillis();
 
+                System.out.println("one set"+id);
+
                 edt.putInt("alarm_id_one",id);
                 edt.putInt("hour_one",hourOfDay);
                 edt.putInt("minute_one",minute);
                 edt.commit();
 
                 TextView text = (TextView)getActivity().findViewById(R.id.hour_one);
-                text.setText(hourOfDay+":"+minute);
+                text.setText(String.format(Locale.getDefault(),"%02d:%02d",hourOfDay,minute));
+
+                intent.putExtra("isMorningAlarm",true);
             }else{
                 chk_id = preferences.getInt("alarm_id_two", 0);
 
                 id = (int) System.currentTimeMillis();
+
+                System.out.println("two set "+id);
 
                 edt.putInt("alarm_id_two",id);
                 edt.putInt("hour_two",hourOfDay);
@@ -240,7 +254,9 @@ public class MainActivity extends AppCompatActivity {
                 edt.commit();
 
                 TextView text = (TextView)getActivity().findViewById(R.id.hour_two);
-                text.setText(String.format("%02d:%02d",hourOfDay,minute));
+                text.setText(String.format(Locale.getDefault(),"%02d:%02d",hourOfDay,minute));
+
+                intent.putExtra("isMorningAlarm",false);
             }
             if(chk_id!=0){
                 PendingIntent cancel_intent = PendingIntent.getBroadcast(context,chk_id,intent,0);
@@ -248,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if((Boolean)getArguments().get("switchState")) {
+                intent.putExtra("id",id);
                 PendingIntent p_intent = PendingIntent.getBroadcast(context, id, intent, 0);
 
                 Calendar calendar = Calendar.getInstance();
@@ -256,9 +273,12 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
 
-                //Repeat alarm every day
-                manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY, p_intent);
+                if(calendar.getTimeInMillis()<System.currentTimeMillis()){
+                    calendar.add(Calendar.DATE,1);
+                }
+
+                System.out.println("Alarm set for: "+calendar.getTime());
+                manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), p_intent);
 
                 if((Boolean)getArguments().get("isHourOne")) {
                     Toast.makeText(context, "Morning alarm was set!", Toast.LENGTH_SHORT).show();

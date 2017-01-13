@@ -3,8 +3,10 @@
     <string name="button_name">Test Popup Alarm</string>
     <string name="default_hour">--:--</string>
     <string name="home_message">just breathe</string>
-
-    <string name="intro_message">Instead Of Spending Money&#8230;</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_notif">See notifications</string>
+    <string name="notif">Notifications</string>
+    <string name="intro_message">Instead of spending money&#8230;</string>
 
     <!--Notification Messages-->
     <string-array name="messages">

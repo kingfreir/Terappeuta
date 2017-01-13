@@ -31,7 +31,8 @@
 
         <activity
             android:name=".PopupActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:label="@string/notif">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"

@@ -39,13 +39,12 @@ public class BootReceiver extends BroadcastReceiver{
             calendar.set(Calendar.HOUR_OF_DAY, h);
             calendar.set(Calendar.MINUTE, m);
 
-            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, pintent);
+            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pintent);
         }
 
-        id = prefs.getInt("alarm_id_one",0);
-        h = prefs.getInt("hour_one",0);
-        m = prefs.getInt("minute_one",0);
+        id = prefs.getInt("alarm_id_two",0);
+        h = prefs.getInt("hour_two",0);
+        m = prefs.getInt("minute_two",0);
 
         switch_state = prefs.getBoolean("switch_two_state",true);
 
@@ -58,8 +57,7 @@ public class BootReceiver extends BroadcastReceiver{
             calendar.set(Calendar.HOUR_OF_DAY, h);
             calendar.set(Calendar.MINUTE, m);
 
-            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, pintent);
+            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pintent);
         }
 
     }
